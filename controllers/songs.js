@@ -1,7 +1,7 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/all', (request, response, next) => {
         // #swagger.path = '/songs'
     	// #swagger.tags = ['Song']
         // #swagger.description = 'Get list of all songs'
