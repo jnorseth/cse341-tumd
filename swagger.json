@@ -1,0 +1,58 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "The Ultimate Music Database",
+    "description": "The final project for CSE341",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/profile": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/songs": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Get list of all songs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/songs/:songs_id": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Get a specific song by song_id",
+        "parameters": [
+          {
+            "name": "songs_id",
+            "in": "query",
+            "description": "The ID of the song to retrieve",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

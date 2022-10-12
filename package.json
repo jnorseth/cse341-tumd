@@ -1,0 +1,34 @@
+{
+  "name": "cse341-tumd",
+  "version": "1.0.0",
+  "description": "Final project for CSE 341",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amo21004/cse341-tumd.git"
+  },
+  "author": "Naif Amoodi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amo21004/cse341-tumd/issues"
+  },
+  "homepage": "https://github.com/amo21004/cse341-tumd#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "express-openid-connect": "^2.8.0",
+    "express-validator": "^6.14.2",
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5",
+    "node": "^18.10.0",
+    "nodemon": "^2.0.20",
+    "swagger": "^0.7.5",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.5.0"
+  }
+}
