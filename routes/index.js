@@ -1,4 +1,6 @@
 module.exports = (dependencies) => {
+    dependencies.app.use('/', require('../controllers/index')(dependencies));
+
     dependencies.app.use('/api-docs', dependencies.swagger_ui.serve, dependencies.swagger_ui.setup(dependencies.swagger_document));
 
     dependencies.app.get('/profile', dependencies.requires_authentication(), require('../controllers/authentication')(dependencies));
