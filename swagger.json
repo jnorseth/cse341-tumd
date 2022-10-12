@@ -44,6 +44,18 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Insert new song to the collection",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/songs/:song_id": {
