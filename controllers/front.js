@@ -1,7 +1,11 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/dashboard', async (req, res) => {
+    router.get('/home', async (req, res) => {
+        // #swagger.path = '/front/home'
+        // #swagger.tags = ['Front']
+        // #swagger.description = 'Home page of the front endpoint'
+
         const songs = await dependencies.models.song.find();
     
         for(const song in songs) {
@@ -16,7 +20,7 @@ module.exports = (dependencies) => {
             }
         }
     
-        res.render('dashboard', {
+        res.render('home', {
             songs: songs
         });
     });

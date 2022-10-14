@@ -32,9 +32,12 @@
         }
       }
     },
-    "/dashboard": {
+    "/front/home": {
       "get": {
-        "description": "",
+        "tags": [
+          "Front"
+        ],
+        "description": "Home page of the front endpoint",
         "parameters": [],
         "responses": {}
       }
