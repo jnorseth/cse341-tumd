@@ -11,6 +11,13 @@
     "http"
   ],
   "paths": {
+    "/html/dashboard": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/profile": {
       "get": {
         "description": "",
@@ -56,7 +63,67 @@
             "in": "body",
             "schema": {
               "required": [
-                "title"
+                "title",
+                "release_year",
+                "summary"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "release_year": {
+                  "type": "string",
+                  "example": "Some release year..."
+                },
+                "rating": {
+                  "type": "number",
+                  "example": "Some rating..."
+                },
+                "summary": {
+                  "type": "string",
+                  "example": "Some summary..."
+                },
+                "artists": {
+                  "type": []
+                },
+                "genres": {
+                  "type": []
+                },
+                "reviews": {
+                  "type": []
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Updates a song specified by song_id",
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "query",
+            "description": "The ID of the song to update",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "title",
+                "release_year",
+                "summary"
               ],
               "properties": {
                 "title": {
@@ -115,6 +182,26 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Deletes a song specified by song_id",
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "query",
+            "description": "The ID of the song to delete",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/artists": {
@@ -129,12 +216,105 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Artist"
+        ],
+        "description": "Insert new artist to the collection",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "first_name",
+                "last_name",
+                "gender",
+                "date_of_birth"
+              ],
+              "properties": {
+                "first_name": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "Some release year..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Some rating..."
+                },
+                "date_of_birth": {
+                  "type": "date",
+                  "example": "Some summary..."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Artist"
+        ],
+        "description": "Updates a artist specified by artist_id",
+        "parameters": [
+          {
+            "name": "artist_id",
+            "in": "query",
+            "description": "The ID of the artist to update",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "first_name",
+                "last_name",
+                "gender",
+                "date_of_birth"
+              ],
+              "properties": {
+                "first_name": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "Some release year..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Some rating..."
+                },
+                "date_of_birth": {
+                  "type": "date",
+                  "example": "Some summary..."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/artists/:artist_id": {
       "get": {
         "tags": [
-          "artist"
+          "Artist"
         ],
         "description": "Get a specific artist by artist_id",
         "parameters": [
@@ -142,6 +322,26 @@
             "name": "artist_id",
             "in": "query",
             "description": "The ID of the artist to retrieve",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Artist"
+        ],
+        "description": "Deletes a artist specified by artist_id",
+        "parameters": [
+          {
+            "name": "artist_id",
+            "in": "query",
+            "description": "The ID of the artist to delete",
             "required": true,
             "type": "number"
           }
@@ -165,12 +365,93 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Review"
+        ],
+        "description": "Insert new review to the collection",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "body",
+                "rating",
+                "user"
+              ],
+              "properties": {
+                "body": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "rating": {
+                  "type": "number",
+                  "example": "Some release year..."
+                },
+                "user": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Review"
+        ],
+        "description": "Updates a review specified by review_id",
+        "parameters": [
+          {
+            "name": "review_id",
+            "in": "query",
+            "description": "The ID of the review to update",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "body",
+                "rating",
+                "user"
+              ],
+              "properties": {
+                "body": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "rating": {
+                  "type": "number",
+                  "example": "Some release year..."
+                },
+                "user": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/reviews/:review_id": {
       "get": {
         "tags": [
-          "review"
+          "Review"
         ],
         "description": "Get a specific review by review_id",
         "parameters": [
@@ -178,6 +459,26 @@
             "name": "review_id",
             "in": "query",
             "description": "The ID of the review to retrieve",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Review"
+        ],
+        "description": "Deletes a review specified by review_id",
+        "parameters": [
+          {
+            "name": "review_id",
+            "in": "query",
+            "description": "The ID of the review to delete",
             "required": true,
             "type": "number"
           }
@@ -201,12 +502,75 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Genre"
+        ],
+        "description": "Insert new genre to the collection",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Some title..."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Genre"
+        ],
+        "description": "Updates a genre specified by genre_id",
+        "parameters": [
+          {
+            "name": "genre_id",
+            "in": "query",
+            "description": "The ID of the genre to update",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Some title..."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/genres/:genre_id": {
       "get": {
         "tags": [
-          "genre"
+          "Genre"
         ],
         "description": "Get a specific genre by genre_id",
         "parameters": [
@@ -214,6 +578,26 @@
             "name": "genre_id",
             "in": "query",
             "description": "The ID of the genre to retrieve",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Genre"
+        ],
+        "description": "Deletes a genre specified by genre_id",
+        "parameters": [
+          {
+            "name": "genre_id",
+            "in": "query",
+            "description": "The ID of the genre to delete",
             "required": true,
             "type": "number"
           }
@@ -242,7 +626,7 @@
     "/users/:user_id": {
       "get": {
         "tags": [
-          "user"
+          "User"
         ],
         "description": "Get a specific user by user_id",
         "parameters": [
