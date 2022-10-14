@@ -34,7 +34,7 @@ module.exports = (dependencies) => {
             #swagger.parameters['obj'] = {
                 in: 'body',
                 '@schema': {
-                    "required": ["first_name", "last_name", "gender", "date_of_birth"],
+                    "required": ["first_name", "last_name", "gender"],
                     "properties": {
                         "first_name": {
                             "type": "string",
@@ -74,7 +74,7 @@ module.exports = (dependencies) => {
             #swagger.parameters['obj'] = {
                 in: 'body',
                 '@schema': {
-                    "required": ["first_name", "last_name", "gender", "date_of_birth"],
+                    "required": ["first_name", "last_name", "gender"],
                     "properties": {
                         "first_name": {
                             "type": "string",
