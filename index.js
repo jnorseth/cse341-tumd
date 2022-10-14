@@ -36,7 +36,11 @@ const { requiresAuth } = require('express-openid-connect');
 
 const swagger_ui = require('swagger-ui-express');
 
-const swagger_document = require('./swagger.json');
+let swagger_document = require('./swagger.render.json');
+
+if(process.env.ENVIRONMENT == 'local') {
+    swagger_document = require('./swagger.local.json');
+}
 
 // Storing all dependencies inside a single object so that this object can be passed around throughout the application
 // Otherwise, required modules would need to be imported inside services, controllers, and models
