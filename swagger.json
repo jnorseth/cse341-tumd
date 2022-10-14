@@ -50,7 +50,44 @@
           "Song"
         ],
         "description": "Insert new song to the collection",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Some title..."
+                },
+                "release_year": {
+                  "type": "string",
+                  "example": "Some release year..."
+                },
+                "rating": {
+                  "type": "number",
+                  "example": "Some rating..."
+                },
+                "summary": {
+                  "type": "string",
+                  "example": "Some summary..."
+                },
+                "artists": {
+                  "type": []
+                },
+                "genres": {
+                  "type": []
+                },
+                "reviews": {
+                  "type": []
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

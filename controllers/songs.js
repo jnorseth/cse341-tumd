@@ -3,7 +3,7 @@ module.exports = (dependencies) => {
 
     router.get('/', (request, response, next) => {
         // #swagger.path = '/songs'
-    	// #swagger.tags = ['Song']
+        // #swagger.tags = ['Song']
         // #swagger.description = 'Get list of all songs'
 
         response.status(200).send('You are at /songs');
@@ -31,9 +31,42 @@ module.exports = (dependencies) => {
             #swagger.path = '/songs'
             #swagger.tags = ['Song']
             #swagger.description = 'Insert new song to the collection'
+            #swagger.parameters['obj'] = {
+                in: 'body',
+                '@schema': {
+                    "required": ["title"],
+                    "properties": {
+                        "title": {
+                            "type": "string",
+                            "example": "Some title..."
+                        },
+                        "release_year": {
+                            "type": "string",
+                            "example": "Some release year..."
+                        },
+                        "rating": {
+                            "type": "number",
+                            "example": "Some rating..."
+                        },
+                        "summary": {
+                            "type": "string",
+                            "example": "Some summary..."
+                        },
+                        "artists": {
+                            "type": []
+                        },
+                        "genres": {
+                            "type": []
+                        },
+                        "reviews": {
+                            "type": []
+                        }
+                    } 
+                }
+            }
         */
 
-        response.status(200).send('You are at /songs/:song_id');
+        response.status(200).send('You are at /songs (POST)');
     });
 
     return router;

@@ -1,12 +1,23 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/', async (request, response, next) => {
         // #swagger.path = '/users'
     	// #swagger.tags = ['User']
         // #swagger.description = 'Get list of all users'
 
-        response.status(200).send('You are at /users');
+        const users = await dependencies.models.user.find();
+
+        const users_list = [];
+
+        for(const user of users) {
+            users_list.push({
+                'nickname': user.nickname,
+                'picture': user.picture
+            })
+        }
+
+        response.status(200).send(users_list);
     });
 
     router.get('/:user_id', (request, response, next) => {
