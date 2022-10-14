@@ -3,7 +3,7 @@ module.exports = (dependencies) => {
 
     router.get('/', (request, response, next) => {
         // #swagger.path = '/'
-    	// #swagger.tags = ['Hone']
+    	// #swagger.tags = ['Home']
         // #swagger.description = 'This is the home page. It does not do much; atleast not so far.'
 
         response.status(200).send('You are at /');

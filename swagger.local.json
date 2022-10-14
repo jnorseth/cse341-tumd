@@ -21,7 +21,7 @@
     "/": {
       "get": {
         "tags": [
-          "Hone"
+          "Home"
         ],
         "description": "This is the home page. It does not do much; atleast not so far.",
         "parameters": [],
@@ -362,6 +362,28 @@
             "name": "artist_id",
             "in": "query",
             "description": "The ID of the artist to delete",
+            "required": true,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/artists/song/:song_id": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "description": "Get a list of artists by song_id",
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "query",
+            "description": "The ID of the song to retrieve artists of",
             "required": true,
             "type": "number"
           }

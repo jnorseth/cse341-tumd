@@ -100,6 +100,24 @@ module.exports = (dependencies) => {
         response.status(200).send('You are at /:artist_id (PUT)');
     });
 
+    // the complete path will be
+    // /artists/song/:song_id
+    router.get('/song/:song_id', (request, response, next) => {
+        /*
+            #swagger.parameters['song_id'] = {
+                in: 'query',
+                description: 'The ID of the song to retrieve artists of',
+                required: true,
+                type: 'number'
+            }
+            #swagger.path = '/artists/song/:song_id'
+            #swagger.tags = ['Artist']
+            #swagger.description = 'Get a list of artists by song_id'
+        */
+
+        response.status(200).send('You are at /artists/song/:artist_id (GET)');
+    });
+
     router.delete('/:artist_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['artist_id'] = {

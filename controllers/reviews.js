@@ -40,7 +40,7 @@ module.exports = (dependencies) => {
             #swagger.description = 'Get a list of reviews by song_id'
         */
 
-        response.status(200).send('You are at /reviews/:review_id (GET)');
+        response.status(200).send('You are at /reviews/song/:song_id (GET)');
     });
 
     // The second callback over here makes authentication required for this endpoint
