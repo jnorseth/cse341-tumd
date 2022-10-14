@@ -678,7 +678,7 @@
         "tags": [
           "User"
         ],
-        "description": "Get list of all users",
+        "description": "Get list of all users. Only displays fields that can be considered safe for public. Fields like email address, etc are skipped",
         "parameters": [],
         "responses": {
           "200": {
