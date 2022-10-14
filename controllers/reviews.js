@@ -25,6 +25,24 @@ module.exports = (dependencies) => {
         response.status(200).send('You are at /reviews/:review_id (GET)');
     });
 
+    // the complete path will be
+    // /reviews/song/:song_id
+    router.get('/song/:song_id', (request, response, next) => {
+        /*
+            #swagger.parameters['song_id'] = {
+                in: 'query',
+                description: 'The ID of the song to retrieve reviews of',
+                required: true,
+                type: 'number'
+            }
+            #swagger.path = '/reviews/song/:song_id'
+            #swagger.tags = ['Review']
+            #swagger.description = 'Get a list of reviews by song_id'
+        */
+
+        response.status(200).send('You are at /reviews/:review_id (GET)');
+    });
+
     // The second callback over here makes authentication required for this endpoint
     router.post('/', dependencies.requires_authentication(), (request, response, next) => {
         /*

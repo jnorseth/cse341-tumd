@@ -25,6 +25,24 @@ module.exports = (dependencies) => {
         response.status(200).send('You are at /songs/:song_id (GET)');
     });
 
+    // the complete path will be
+    // /songs/genre/:genre_id
+    router.get('/genre/:genre_id', (request, response, next) => {
+        /*
+            #swagger.parameters['genre_id'] = {
+                in: 'query',
+                description: 'The ID of the genre to retrieve songs of',
+                required: true,
+                type: 'number'
+            }
+            #swagger.path = '/songs/genre/:genre_id'
+            #swagger.tags = ['Song']
+            #swagger.description = 'Get a list of songs by genre_id'
+        */
+
+        response.status(200).send('You are at /songs/:genre_id (GET)');
+    });
+
     // The second callback over here makes authentication required for this endpoint
     router.post('/', dependencies.requires_authentication(), (request, response, next) => {
         /*
