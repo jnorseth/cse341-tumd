@@ -11,13 +11,6 @@
     "http"
   ],
   "paths": {
-    "/html/dashboard": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/profile": {
       "get": {
         "description": "",
@@ -37,6 +30,13 @@
             "description": "OK"
           }
         }
+      }
+    },
+    "/html/dashboard": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     },
     "/songs": {
@@ -230,8 +230,7 @@
               "required": [
                 "first_name",
                 "last_name",
-                "gender",
-                "date_of_birth"
+                "gender"
               ],
               "properties": {
                 "first_name": {
@@ -280,8 +279,7 @@
               "required": [
                 "first_name",
                 "last_name",
-                "gender",
-                "date_of_birth"
+                "gender"
               ],
               "properties": {
                 "first_name": {
