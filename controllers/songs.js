@@ -34,7 +34,7 @@ module.exports = (dependencies) => {
             #swagger.parameters['obj'] = {
                 in: 'body',
                 '@schema': {
-                    "required": ["title", "release_year", "summary"],
+                    "required": ["title", "release_year", "rating", "summary", "artist"],
                     "properties": {
                         "title": {
                             "type": "string",
@@ -51,6 +51,9 @@ module.exports = (dependencies) => {
                         "summary": {
                             "type": "string",
                             "example": "Some summary..."
+                        },
+                        "artist": {
+                            "type": "string"
                         }
                     } 
                 }
@@ -74,7 +77,7 @@ module.exports = (dependencies) => {
             #swagger.parameters['obj'] = {
                 in: 'body',
                 '@schema': {
-                    "required": ["title", "release_year", "summary"],
+                    "required": ["title", "release_year", "rating", "summary", "artist"],
                     "properties": {
                         "title": {
                             "type": "string",
@@ -91,6 +94,9 @@ module.exports = (dependencies) => {
                         "summary": {
                             "type": "string",
                             "example": "Some summary..."
+                        },
+                        "artist": {
+                            "type": "string"
                         }
                     } 
                 }

@@ -6,8 +6,8 @@
 
         <ul>
             <% songs.forEach(function(song) { %>
-                <li class="mb-3">
-                <a href="/html/song/<%= song.id %>"><strong><%= song.title %></strong> by <em><%= song.artists[0].first_name %> <%= song.artists[0].last_name %></em></a>
+            <li class="mb-3">
+                <strong><%= song.title %></strong> by <em><%= song.artist %></em>
             </li>
             <% }); %> 
         </ul>
@@ -15,6 +15,15 @@
 
     <div class="col-6 mb-5">
         <h2 class="mb-3">Featured Artists</h2>
+
+
+        <ul>
+            <% artists.forEach(function(artist) { %>
+            <li class="mb-3">
+                <strong><%= artist.first_name %> <%= artist.last_name %></strong>
+            </li>
+            <% }); %> 
+        </ul>
     </div>
 
     <div class="col-6 mb-5 featured-users">

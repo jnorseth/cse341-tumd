@@ -68,7 +68,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -86,6 +88,9 @@
                 "summary": {
                   "type": "string",
                   "example": "Some summary..."
+                },
+                "artist": {
+                  "type": "string"
                 }
               }
             }
@@ -139,7 +144,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -157,6 +164,9 @@
                 "summary": {
                   "type": "string",
                   "example": "Some summary..."
+                },
+                "artist": {
+                  "type": "string"
                 }
               }
             }
