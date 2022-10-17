@@ -12,12 +12,12 @@ module.exports = (dependencies) => {
     router.get('/:artist_id', (request, response, next) => {
         /*
             #swagger.parameters['artist_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the artist to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/artists/:artist_id'
+            #swagger.path = '/artists/{artist_id}'
             #swagger.tags = ['Artist']
             #swagger.description = 'Get a specific artist by artist_id'
         */
@@ -63,12 +63,12 @@ module.exports = (dependencies) => {
     router.put('/:artist_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['artist_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the artist to update',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/artists'
+            #swagger.path = '/artists/{artist_id}'
             #swagger.tags = ['Artist']
             #swagger.description = 'Updates a artist specified by artist_id'
             #swagger.parameters['obj'] = {
@@ -100,33 +100,15 @@ module.exports = (dependencies) => {
         response.status(200).send('You are at /:artist_id (PUT)');
     });
 
-    // the complete path will be
-    // /artists/song/:song_id
-    router.get('/song/:song_id', (request, response, next) => {
-        /*
-            #swagger.parameters['song_id'] = {
-                in: 'query',
-                description: 'The ID of the song to retrieve artists of',
-                required: true,
-                type: 'number'
-            }
-            #swagger.path = '/artists/song/:song_id'
-            #swagger.tags = ['Artist']
-            #swagger.description = 'Get a list of artists by song_id'
-        */
-
-        response.status(200).send('You are at /artists/song/:artist_id (GET)');
-    });
-
     router.delete('/:artist_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['artist_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the artist to delete',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/artists/:artist_id'
+            #swagger.path = '/artists/{artist_id}'
             #swagger.tags = ['Artist']
             #swagger.description = 'Deletes a artist specified by artist_id'
         */

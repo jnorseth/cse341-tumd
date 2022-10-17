@@ -1,20 +1,50 @@
 <%- include('partials/header'); -%>
 
 <div class="row">
-    <div class="col">
-        <h2>Latest Songs</h2>
+    <div class="col-6 mb-5">
+        <h2 class="mb-3">Latest Songs</h2>
 
         <ul>
             <% songs.forEach(function(song) { %>
-            <li>
+                <li class="mb-3">
                 <a href="/html/song/<%= song.id %>"><strong><%= song.title %></strong> by <em><%= song.artists[0].first_name %> <%= song.artists[0].last_name %></em></a>
             </li>
             <% }); %> 
         </ul>
     </div>
 
-    <div class="col">
-        <h2>Featured Artists</h2>
+    <div class="col-6 mb-5">
+        <h2 class="mb-3">Featured Artists</h2>
+    </div>
+
+    <div class="col-6 mb-5 featured-users">
+        <h2 class="mb-3">Featured Users</h2>
+
+        <ul>
+            <% users.forEach(function(user) { %>
+            <li class="mb-3">
+                <% if(user.picture){ %>
+                <img src="<%= user.picture %>" class="d-inline-block me-3" alt="<%= user.nickname %>">
+                <% } %>
+
+                <strong><%= user.nickname %></strong>
+            </li>
+            <% }); %> 
+        </ul>
+    </div>
+
+    <div class="col-6 mb-5">
+        <h2 class="mb-3">Latest Reviews</h2>
+
+        <ul>
+            <% reviews.forEach(function(review) { %>
+            <li class="mb-3">
+                <%= review.body %>
+                <br>
+                Rated <em><%= review.rating %> / 5</em> by <strong><%= review.user %><br></strong>
+            </li>
+            <% }); %> 
+        </ul>
     </div>
 </div>
 

@@ -12,12 +12,12 @@ module.exports = (dependencies) => {
     router.get('/:genre_id', (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the genre to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/genres/:genre_id'
+            #swagger.path = '/genres/{genre_id}'
             #swagger.tags = ['Genre']
             #swagger.description = 'Get a specific genre by genre_id'
         */
@@ -51,12 +51,12 @@ module.exports = (dependencies) => {
     router.put('/:genre_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the genre to update',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/genres'
+            #swagger.path = '/genres/{genre_id}'
             #swagger.tags = ['Genre']
             #swagger.description = 'Updates a genre specified by genre_id'
             #swagger.parameters['obj'] = {
@@ -79,12 +79,12 @@ module.exports = (dependencies) => {
     router.delete('/:genre_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the genre to delete',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/genres/:genre_id'
+            #swagger.path = '/genres/{genre_id}'
             #swagger.tags = ['Genre']
             #swagger.description = 'Deletes a genre specified by genre_id'
         */

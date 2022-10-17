@@ -12,6 +12,7 @@ module.exports = (dependencies) => {
     
         for(const user in users) {
             users_processed.push({
+                id: users[user]._id,
                 nickname: users[user].nickname,
                 picture: users[user].picture,
                 role: users[user].role
@@ -21,20 +22,35 @@ module.exports = (dependencies) => {
         response.status(200).send(users_processed);
     });
 
-    router.get('/:user_id', (request, response, next) => {
+    router.get('/:user_id', async (request, response, next) => {
         /*
             #swagger.parameters['user_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the user to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/users/:user_id'
+            #swagger.path = '/users/{user_id}'
             #swagger.tags = ['User']
             #swagger.description = 'Get a specific user by user_id'
         */
 
-        response.status(200).send('You are at /users/:user_id (GET)');
+        const user = await dependencies.models.user.findOne({
+            _id: request.params.user_id
+        });
+
+        if(!user) {
+            return response.status(404).send('User not found');
+        }
+
+        const user_processed = {};
+
+        user_processed.id = user._id;
+        user_processed.nickname = user.nickname;
+        user_processed.picture = user.nickname;
+        user_processed.role = user.role;
+
+        response.status(200).send(user_processed);
     });
 
     return router;

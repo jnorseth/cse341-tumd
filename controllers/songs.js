@@ -12,35 +12,17 @@ module.exports = (dependencies) => {
     router.get('/:song_id', (request, response, next) => {
         /*
             #swagger.parameters['song_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the song to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/songs/:song_id'
+            #swagger.path = '/songs/{song_id}'
             #swagger.tags = ['Song']
             #swagger.description = 'Get a specific song by song_id'
         */
 
         response.status(200).send('You are at /songs/:song_id (GET)');
-    });
-
-    // the complete path will be
-    // /songs/genre/:genre_id
-    router.get('/genre/:genre_id', (request, response, next) => {
-        /*
-            #swagger.parameters['genre_id'] = {
-                in: 'query',
-                description: 'The ID of the genre to retrieve songs of',
-                required: true,
-                type: 'number'
-            }
-            #swagger.path = '/songs/genre/:genre_id'
-            #swagger.tags = ['Song']
-            #swagger.description = 'Get a list of songs by genre_id'
-        */
-
-        response.status(200).send('You are at /songs/genre/:genre_id (GET)');
     });
 
     // The second callback over here makes authentication required for this endpoint
@@ -69,15 +51,6 @@ module.exports = (dependencies) => {
                         "summary": {
                             "type": "string",
                             "example": "Some summary..."
-                        },
-                        "artists": {
-                            "type": []
-                        },
-                        "genres": {
-                            "type": []
-                        },
-                        "reviews": {
-                            "type": []
                         }
                     } 
                 }
@@ -90,12 +63,12 @@ module.exports = (dependencies) => {
     router.put('/:song_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['song_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the song to update',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/songs'
+            #swagger.path = '/songs/{song_id}'
             #swagger.tags = ['Song']
             #swagger.description = 'Updates a song specified by song_id'
             #swagger.parameters['obj'] = {
@@ -118,15 +91,6 @@ module.exports = (dependencies) => {
                         "summary": {
                             "type": "string",
                             "example": "Some summary..."
-                        },
-                        "artists": {
-                            "type": []
-                        },
-                        "genres": {
-                            "type": []
-                        },
-                        "reviews": {
-                            "type": []
                         }
                     } 
                 }
@@ -139,12 +103,12 @@ module.exports = (dependencies) => {
     router.delete('/:song_id', dependencies.requires_authentication(), (request, response, next) => {
         /*
             #swagger.parameters['song_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the song to delete',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/songs/:song_id'
+            #swagger.path = '/songs/{song_id}'
             #swagger.tags = ['Song']
             #swagger.description = 'Deletes a song specified by song_id'
         */
