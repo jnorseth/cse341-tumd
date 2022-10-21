@@ -89,7 +89,8 @@ module.exports = (dependencies) => {
         ) {
             return response.status(400).send('One or more of the required fields are missing.');
         } else{
-            next();
+            //not sure if this is needed so I am commenting it out
+            //next();
         }
         const new_artist = await dependencies.models.artist.create(request.body);
 
@@ -143,7 +144,8 @@ module.exports = (dependencies) => {
         ){
             return response.status(400).send('One or more of the required fields are missing.');
         } else {
-            next();
+            //not sure if this is needed so I am commenting it out
+            //next();
         }
         const update_artist = await dependencies.models.artist.updateOne({ _id: request.params.artist_id }, request.body);
 
