@@ -230,20 +230,21 @@
               "properties": {
                 "first_name": {
                   "type": "string",
-                  "example": "Some title..."
+                  "example": "Some first name..."
                 },
                 "last_name": {
                   "type": "string",
-                  "example": "Some release year..."
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "Some rating..."
+                  "example": "Some last name..."
                 },
                 "date_of_birth": {
                   "type": "date",
-                  "example": "Some summary..."
+                  "example": "Some birth date..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Some gender..."
                 }
+                
               }
             }
           }
@@ -301,20 +302,21 @@
               "properties": {
                 "first_name": {
                   "type": "string",
-                  "example": "Some title..."
+                  "example": "Some first name..."
                 },
                 "last_name": {
                   "type": "string",
-                  "example": "Some release year..."
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "Some rating..."
+                  "example": "Some last name..."
                 },
                 "date_of_birth": {
                   "type": "date",
-                  "example": "Some summary..."
+                  "example": "Some birth date..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Some gender..."
                 }
+                
               }
             }
           }
