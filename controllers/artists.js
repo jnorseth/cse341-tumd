@@ -1,6 +1,3 @@
-const { create } = require('underscore');
-const artist = require('../models/artist');
-
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
@@ -14,13 +11,14 @@ module.exports = (dependencies) => {
 
         for (const artist in artists) {
             artists_all.push({
-              first_name: artists[artist].first_name,
-              last_name: artists[artist].last_name,
-              gender: artists[artist].gender,
-              date_of_birth: artists[artist].date_of_birth
+                _id: artists[artist]._id,
+                first_name: artists[artist].first_name,
+                last_name: artists[artist].last_name,
+                gender: artists[artist].gender,
+                date_of_birth: artists[artist].date_of_birth
             });
         }
-         
+
         response.status(200).send(artists_all);
     });
 
@@ -36,21 +34,23 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Artist']
             #swagger.description = 'Get a specific artist by artist_id'
         */
-            const artist_find = await dependencies.models.artist.findOne({_id: request.params.artist_id});
-            console.log(artist_find);
-            if (!artist_find){
-                response.status(404).send('Artist not found.');
-            }
-            const artist_single = {};
+        const artist_find = await dependencies.models.artist.findOne({ _id: request.params.artist_id });
+        console.log(artist_find);
+        if (!artist_find) {
+            response.status(404).send('Artist not found.');
+        }
+        const artist_single = {};
 
-            artist_single.first_name = artist_find.first_name;
-            artist_single.last_name = artist_find.last_name;
-            artist_single.gender = artist_find.gender;
-            artist_single.date_of_birth = artist_find.date_of_birth;
+        artist_single._id = artist_find._id;
+        artist_single.first_name = artist_find.first_name;
+        artist_single.last_name = artist_find.last_name;
+        artist_single.gender = artist_find.gender;
+        artist_single.date_of_birth = artist_find.date_of_birth;
 
-            response.status(200).send(artist_single);
-        
+        response.status(200).send(artist_single);
+
     });
+
     // The second callback over here makes authentication required for this endpoint
     router.post('/', dependencies.requires_authentication(), async (request, response) => {
         /*
@@ -83,15 +83,14 @@ module.exports = (dependencies) => {
                 }
             }
         */
-           const new_artist = await dependencies.models.artist.create(request.body); 
+        const new_artist = await dependencies.models.artist.create(request.body);
 
-            if(!new_artist){
-                response.status(500).send('An error occured.');
-                
-            } else {
-                response.status(201).send('Successfully added artist. ID: ' + new_artist._id);
-            }
-        });
+        if (!new_artist) {
+            response.status(500).send('An error occured.');
+        } else {
+            response.status(201).send('Successfully added artist. ID: ' + new_artist._id);
+        }
+    });
 
     router.put('/:artist_id', dependencies.requires_authentication(), async (request, response, next) => {
         /*
@@ -130,9 +129,9 @@ module.exports = (dependencies) => {
                 }
             }
         */
-        const update_artist = await dependencies.models.artist.updateOne({_id: request.params.artist_id}, request.body);
+        const update_artist = await dependencies.models.artist.updateOne({ _id: request.params.artist_id }, request.body);
 
-        if (!update_artist){
+        if (!update_artist) {
             response.status(500).send('An error occurred. Update unsuccessful.');
         } else {
             response.status(200).send('Successfully updated artist with ID: ' + request.params.artist_id);
@@ -151,7 +150,7 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Artist']
             #swagger.description = 'Deletes a artist specified by artist_id'
         */
-        const delete_artist = await dependencies.models.artist.deleteOne({_id: request.params.artist_id});
+        const delete_artist = await dependencies.models.artist.deleteOne({ _id: request.params.artist_id });
         if (!delete_artist) {
             response.status(500).send('An error occurred during deletion.');
         } else {

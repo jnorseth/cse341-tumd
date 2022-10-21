@@ -1,13 +1,25 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/', async (request, response, next) => {
        
         // #swagger.path = '/reviews'
         // #swagger.tags = ['Review']
         // #swagger.description = 'Get list of all reviews'
 
-        response.status(200).send(reviews_all);
+        const reviews = await dependencies.models.review.find();
+
+        for(const review of reviews) {
+            // transforms the user ID to nickname
+            const user_id = review.user;
+            review.user = (await dependencies.models.user.findOne({_id: user_id})).nickname;
+
+            // transforms the numeric song ID to title
+            const song_id = review.song;
+            review.song = (await dependencies.models.song.findOne({_id: song_id})).title;
+        }
+
+        response.status(200).send(reviews);
     });
 
     router.get('/:review_id', async (request, response, next) => {
