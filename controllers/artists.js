@@ -83,6 +83,14 @@ module.exports = (dependencies) => {
                 }
             }
         */
+        if (
+            !request.body.first_name || !request.body.last_name ||
+            !request.body.date_of_birth || !request.body.gender
+        ) {
+            return response.status(400).send('One or more of the required fields are missing.');
+        } else{
+            next();
+        }
         const new_artist = await dependencies.models.artist.create(request.body);
 
         if (!new_artist) {
@@ -129,6 +137,14 @@ module.exports = (dependencies) => {
                 }
             }
         */
+        if (
+            !request.body.first_name || !request.body.last_name ||
+            !request.body.date_of_birth || !request.body.gender
+        ){
+            return response.status(400).send('One or more of the required fields are missing.');
+        } else {
+            next();
+        }
         const update_artist = await dependencies.models.artist.updateOne({ _id: request.params.artist_id }, request.body);
 
         if (!update_artist) {
