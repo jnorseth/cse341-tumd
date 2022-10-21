@@ -2,11 +2,12 @@ module.exports = (dependencies) => {
     const router = dependencies.router();
 
     router.get('/', (request, response, next) => {
+       
         // #swagger.path = '/reviews'
         // #swagger.tags = ['Review']
         // #swagger.description = 'Get list of all reviews'
 
-        response.status(200).send('You are at /reviews');
+        response.status(200).send(reviews_all);
     });
 
     router.get('/:review_id', (request, response, next) => {

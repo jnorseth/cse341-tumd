@@ -1,12 +1,24 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/', async (request, response, next) => {   
         // #swagger.path = '/genres'
         // #swagger.tags = ['Genre']
         // #swagger.description = 'Get list of all genres'
+        const genres = await dependencies.models.genre.find();
 
-        response.status(200).send('You are at /genres');
+        const genres_getall= [];
+        
+        try {
+        for(const genre of genres) {
+            genres_getall.push({
+                name: genre.name
+            });
+        }
+        response.status(200).send(genres_getall);
+    }catch(err) {
+        console.error(err);
+    }
     });
 
     router.get('/:genre_id', (request, response, next) => {
@@ -21,9 +33,21 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Genre']
             #swagger.description = 'Get a specific genre by genre_id'
         */
-
-        response.status(200).send('You are at /genres/:genre_id (GET)');
+            const genre_single = dependencies.models.genre.findOne({_id: request.params.genre_id});
+            if(!genre_single) {
+                return response.status(404).send('Genre not found');
+            }
+            console.log(genre_single);
+            const genres_processed = {};
+            try {
+            genres_processed.name = genre_single.name;
+            
+            response.status(200).send(genres_processed);
+            }catch(err) {
+                console.error(err);
+            }
     });
+
 
     // The second callback over here makes authentication required for this endpoint
     router.post('/', dependencies.requires_authentication(), (request, response, next) => {
