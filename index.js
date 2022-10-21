@@ -1,6 +1,6 @@
 const { fileURLToPath } = require('url');
 const { dirname, sep } = require('path');
-
+const bodyParser = require('body-parser');
 const express = require('express');
 
 const app = express();
@@ -10,6 +10,7 @@ const router = express.Router;
 require('dotenv').config();
 
 app.use(require('cors')());
+app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
 

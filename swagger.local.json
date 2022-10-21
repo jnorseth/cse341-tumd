@@ -48,6 +48,9 @@
           "Song"
         ],
         "description": "Get list of all songs",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -68,7 +71,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -87,17 +92,39 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artists": {
-                  "type": []
-                },
-                "genres": {
-                  "type": []
-                },
-                "reviews": {
-                  "type": []
+                "artist": {
+                  "type": "string"
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/songs/{song_id}": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Get a specific song by song_id",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the song to retrieve"
           }
         ],
         "responses": {
@@ -114,10 +141,10 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to update",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the song to update"
           },
           {
             "name": "obj",
@@ -126,7 +153,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -145,44 +174,19 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artists": {
-                  "type": []
-                },
-                "genres": {
-                  "type": []
-                },
-                "reviews": {
-                  "type": []
+                "artist": {
+                  "type": "string"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/songs/:song_id": {
-      "get": {
-        "tags": [
-          "Song"
-        ],
-        "description": "Get a specific song by song_id",
-        "parameters": [
-          {
-            "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to retrieve",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -194,10 +198,10 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to delete",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the song to delete"
           }
         ],
         "responses": {
@@ -207,19 +211,19 @@
         }
       }
     },
-    "/songs/genre/:genre_id": {
+    "/songs/genre/{genre_id}\n\n #swagger.tags = [": {
       "get": {
-        "tags": [
-          "Song"
-        ],
         "description": "Get a list of songs by genre_id",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "genre_id",
-            "in": "query",
-            "description": "The ID of the genre to retrieve songs of",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the genre to retrieve songs of"
           }
         ],
         "responses": {

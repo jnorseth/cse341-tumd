@@ -4,9 +4,7 @@ module.exports = (dependencies) => {
         release_year: Number,
         rating: Number,
         summary: String,
-        artists: [dependencies.mongoose.Schema.ObjectId],
-        genres: [dependencies.mongoose.Schema.ObjectId],
-        reviews: [dependencies.mongoose.Schema.ObjectId]
+        artist: dependencies.mongoose.Schema.ObjectId|String
     });
 
     dependencies.mongoose.model('Song', song);
