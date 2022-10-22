@@ -48,6 +48,9 @@
           "Song"
         ],
         "description": "Get list of all songs",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -68,9 +71,7 @@
               "required": [
                 "title",
                 "release_year",
-                "rating",
-                "summary",
-                "artist"
+                "summary"
               ],
               "properties": {
                 "title": {
@@ -89,8 +90,14 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artist": {
-                  "type": "string"
+                "artists": {
+                  "type": []
+                },
+                "genres": {
+                  "type": []
+                },
+                "reviews": {
+                  "type": []
                 }
               }
             }
@@ -132,10 +139,10 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "path",
+            "in": "query",
+            "description": "The ID of the song to update",
             "required": true,
-            "type": "string",
-            "description": "The ID of the song to update"
+            "type": "number"
           },
           {
             "name": "obj",
@@ -144,9 +151,7 @@
               "required": [
                 "title",
                 "release_year",
-                "rating",
-                "summary",
-                "artist"
+                "summary"
               ],
               "properties": {
                 "title": {
@@ -165,11 +170,39 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artist": {
-                  "type": "string"
+                "artists": {
+                  "type": []
+                },
+                "genres": {
+                  "type": []
+                },
+                "reviews": {
+                  "type": []
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/songs/:song_id": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Get a specific song by song_id",
+        "parameters": [
+          {
+            "name": "song_id",
+            "in": "query",
+            "description": "The ID of the song to retrieve",
+            "required": true,
+            "type": "number"
           }
         ],
         "responses": {
@@ -186,10 +219,32 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "path",
+            "in": "query",
+            "description": "The ID of the song to delete",
             "required": true,
-            "type": "string",
-            "description": "The ID of the song to delete"
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/songs/genre/:genre_id": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "description": "Get a list of songs by genre_id",
+        "parameters": [
+          {
+            "name": "genre_id",
+            "in": "query",
+            "description": "The ID of the genre to retrieve songs of",
+            "required": true,
+            "type": "number"
           }
         ],
         "responses": {
