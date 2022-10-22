@@ -1,4 +1,6 @@
 // const ObjectId = require('mongodb').ObjectId;
+// const { validationResult } = require('express-validator');
+let errors;
 
 module.exports = (dependencies) => {
     const router = dependencies.router();
@@ -93,7 +95,20 @@ module.exports = (dependencies) => {
     });
 
     // The second callback over here makes authentication required for this endpoint
-    router.post('/', dependencies.requires_authentication(), (request, response, next) => {
+    router.post(
+        '/', 
+        dependencies.requires_authentication(), 
+        dependencies.validate.songValidation, 
+        (req, res, next) => {
+            errors = dependencies.validate.validationResult(req);
+            if (!errors.isEmpty()) {
+              console.log(errors.mapped());
+              console.log('errors');
+            } else {
+              next();
+            }
+          }, 
+        (request, response, next) => {
         /*
             #swagger.path = '/songs'
             #swagger.tags = ['Song']
@@ -131,7 +146,7 @@ module.exports = (dependencies) => {
             newSong.release_year = parseInt(request.body.release_year);
             newSong.rating = parseInt(request.body.rating);
             newSong.summary = request.body.summary;
-            newSong.artists = request.body.artists;
+            newSong.artist = request.body.artist;
             // These lines were used in the previous model:
                 // newSong.artists = [];
                 // for (i of request.body.artists){
@@ -153,7 +168,20 @@ module.exports = (dependencies) => {
                 })
         });
 
-    router.put('/:song_id', dependencies.requires_authentication(), (request, response, next) => {
+    router.put(
+        '/:song_id', 
+        dependencies.requires_authentication(), 
+        dependencies.validate.songValidation,
+        (req, res, next) => {
+            errors = dependencies.validate.validationResult(req);
+            if (!errors.isEmpty()) {
+              console.log(errors.mapped());
+              console.log('errors');
+            } else {
+              next();
+            }
+          }, 
+        (request, response, next) => {
         /*
             #swagger.parameters['song_id'] = {
                 in: 'path',
