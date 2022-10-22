@@ -8,6 +8,7 @@ test('check home page response (i.e. /)', async () => {
     );
 });
 
+
 test('check single user api endpoint (/users/6347102ab16a3ca89f638858)', async () => {
     expect(JSON.stringify
         ((await axios('http://localhost:3000/users/6347102ab16a3ca89f638858')).data)
