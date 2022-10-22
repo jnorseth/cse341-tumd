@@ -1,6 +1,3 @@
-const { fileURLToPath } = require('url');
-const { dirname, sep } = require('path');
-const bodyParser = require('body-parser');
 const express = require('express');
 
 const app = express();
@@ -10,13 +7,20 @@ const router = express.Router;
 require('dotenv').config();
 
 app.use(require('cors')());
-app.use(bodyParser.json());
+
+const body_parser = require('body-parser');
+
+app.use(body_parser.json());
+
+app.use(body_parser.urlencoded({ extended: true }));
+
+app.use(body_parser.json());
 
 const mongoose = require('mongoose');
 
 require('./services/connection')(mongoose);
 
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
     authRequired: false,
@@ -33,8 +37,6 @@ const port = process.env.PORT || 3000;
 
 app.listen(port);
 
-const { requiresAuth } = require('express-openid-connect');
-
 const swagger_ui = require('swagger-ui-express');
 
 let swagger_document = require('./swagger.render.json');
@@ -43,6 +45,8 @@ if(process.env.ENVIRONMENT == 'local') {
     swagger_document = require('./swagger.local.json');
 }
 
+const axios = require('axios');
+
 // Storing all dependencies inside a single object so that this object can be passed around throughout the application
 // Otherwise, required modules would need to be imported inside services, controllers, and models
 const dependencies = {
@@ -50,8 +54,10 @@ const dependencies = {
     mongoose: mongoose,
     router: router,
     requires_authentication: requiresAuth,
+    base_url: process.env.BASE_URL,
     swagger_ui: swagger_ui,
-    swagger_document: swagger_document
+    swagger_document: swagger_document,
+    axios: axios
 };
 
 // Loading all Mongoose models
@@ -74,11 +80,13 @@ dependencies.models = {
     user: mongoose.model('User')
 };
 
+const { dirname, sep } = require('path');
+
 const configuration = {
     dir: {
-    root: __dirname,
-    static: __dirname + sep + 'static' + sep,
-    views: __dirname + sep + 'views' + sep
+        root: __dirname,
+        static: __dirname + sep + 'static' + sep,
+        views: __dirname + sep + 'views' + sep
     }
 };
 

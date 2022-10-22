@@ -1,3 +1,6 @@
 main {
     background-color: #eee;
 }
+.featured-users img {
+    width: 120px;
+}

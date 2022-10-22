@@ -13,7 +13,7 @@ module.exports = (dependencies) => {
               .then((lists) => {
                 response.setHeader('Content-Type', 'application/json');
                 response.status(200).json(lists);
-                console.log(lists);
+                //console.log(lists);
               })
               .catch((e) => {
                 console.error(e);
@@ -36,14 +36,14 @@ module.exports = (dependencies) => {
             #swagger.description = 'Get a specific song by song_id'
         */
             const id = request.params.song_id;
-            console.log(id);
+            //console.log(id);
             try {
                 const result = dependencies.models.song.find({_id:id});
                 result
                   .then((lists) => {
                     response.setHeader('Content-Type', 'application/json');
                     response.status(200).json(lists);
-                    console.log(lists);
+                    //console.log(lists);
                   })
                   .catch((e) => {
                     console.error(e);
@@ -247,11 +247,11 @@ module.exports = (dependencies) => {
                 id,
                 function(err, data) {
                     if(err){
-                        console.log(err);
+                        //console.log(err);
                     }
                     else{
                         response.status(200).send(data);
-                        console.log("Data Deleted!");
+                        //console.log("Data Deleted!");
                     }
                 })
     });

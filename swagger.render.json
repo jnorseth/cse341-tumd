@@ -259,32 +259,63 @@
               "required": [
                 "first_name",
                 "last_name",
-                "gender"
+                "date_of_birth"
               ],
               "properties": {
                 "first_name": {
                   "type": "string",
-                  "example": "Some title..."
+                  "example": "Some name..."
                 },
                 "last_name": {
                   "type": "string",
-                  "example": "Some release year..."
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "Some rating..."
+                  "example": "Some last name..."
                 },
                 "date_of_birth": {
                   "type": "date",
-                  "example": "Some summary..."
+                  "example": "Some birth date..."
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "Some gender..."
                 }
               }
             }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/artists/{artist_id}": {
+      "get": {
+        "tags": [
+          "Artist"
+        ],
+        "description": "Get a specific artist by artist_id",
+        "parameters": [
+          {
+            "name": "artist_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the artist to retrieve"
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -296,36 +327,28 @@
         "parameters": [
           {
             "name": "artist_id",
-            "in": "query",
-            "description": "The ID of the artist to update",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the artist to update"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
-              "required": [
-                "first_name",
-                "last_name",
-                "gender"
-              ],
+              "type": "object",
               "properties": {
                 "first_name": {
-                  "type": "string",
-                  "example": "Some title..."
+                  "example": "any"
                 },
                 "last_name": {
-                  "type": "string",
-                  "example": "Some release year..."
-                },
-                "gender": {
-                  "type": "string",
-                  "example": "Some rating..."
+                  "example": "any"
                 },
                 "date_of_birth": {
-                  "type": "date",
-                  "example": "Some summary..."
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
                 }
               }
             }
@@ -334,28 +357,12 @@
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/artists/:artist_id": {
-      "get": {
-        "tags": [
-          "Artist"
-        ],
-        "description": "Get a specific artist by artist_id",
-        "parameters": [
-          {
-            "name": "artist_id",
-            "in": "query",
-            "description": "The ID of the artist to retrieve",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -367,37 +374,18 @@
         "parameters": [
           {
             "name": "artist_id",
-            "in": "query",
-            "description": "The ID of the artist to delete",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the artist to delete"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/artists/song/:song_id": {
-      "get": {
-        "tags": [
-          "Artist"
-        ],
-        "description": "Get a list of artists by song_id",
-        "parameters": [
-          {
-            "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to retrieve artists of",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -437,9 +425,12 @@
                 },
                 "rating": {
                   "type": "number",
-                  "example": "Some release year..."
+                  "example": 4.5
                 },
                 "user": {
+                  "type": "string"
+                },
+                "song": {
                   "type": "string"
                 }
               }
@@ -447,8 +438,36 @@
           }
         ],
         "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/reviews/{review_id}": {
+      "get": {
+        "tags": [
+          "Review"
+        ],
+        "description": "Get a specific review by review_id",
+        "parameters": [
+          {
+            "name": "review_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the review to retrieve"
+          }
+        ],
+        "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -460,10 +479,10 @@
         "parameters": [
           {
             "name": "review_id",
-            "in": "query",
-            "description": "The ID of the review to update",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the review to retrieve"
           },
           {
             "name": "obj",
@@ -481,9 +500,12 @@
                 },
                 "rating": {
                   "type": "number",
-                  "example": "Some release year..."
+                  "example": 4.5
                 },
                 "user": {
+                  "type": "string"
+                },
+                "song": {
                   "type": "string"
                 }
               }
@@ -491,30 +513,11 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/reviews/:review_id": {
-      "get": {
-        "tags": [
-          "Review"
-        ],
-        "description": "Get a specific review by review_id",
-        "parameters": [
-          {
-            "name": "review_id",
-            "in": "query",
-            "description": "The ID of the review to retrieve",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -526,37 +529,18 @@
         "parameters": [
           {
             "name": "review_id",
-            "in": "query",
-            "description": "The ID of the review to delete",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the review to retrieve"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
-          }
-        }
-      }
-    },
-    "/reviews/song/:song_id": {
-      "get": {
-        "tags": [
-          "Review"
-        ],
-        "description": "Get a list of reviews by song_id",
-        "parameters": [
-          {
-            "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to retrieve reviews of",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -601,6 +585,31 @@
             "description": "OK"
           }
         }
+      }
+    },
+    "/genres/{genre_id}": {
+      "get": {
+        "tags": [
+          "Genre"
+        ],
+        "description": "Get a specific genre by genre_id",
+        "parameters": [
+          {
+            "name": "genre_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The ID of the genre to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       },
       "put": {
         "tags": [
@@ -610,10 +619,10 @@
         "parameters": [
           {
             "name": "genre_id",
-            "in": "query",
-            "description": "The ID of the genre to update",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the genre to update"
           },
           {
             "name": "obj",
@@ -636,28 +645,6 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/genres/:genre_id": {
-      "get": {
-        "tags": [
-          "Genre"
-        ],
-        "description": "Get a specific genre by genre_id",
-        "parameters": [
-          {
-            "name": "genre_id",
-            "in": "query",
-            "description": "The ID of the genre to retrieve",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       },
       "delete": {
         "tags": [
@@ -667,10 +654,10 @@
         "parameters": [
           {
             "name": "genre_id",
-            "in": "query",
-            "description": "The ID of the genre to delete",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the genre to delete"
           }
         ],
         "responses": {
@@ -694,7 +681,7 @@
         }
       }
     },
-    "/users/:user_id": {
+    "/users/{user_id}": {
       "get": {
         "tags": [
           "User"
@@ -703,15 +690,18 @@
         "parameters": [
           {
             "name": "user_id",
-            "in": "query",
-            "description": "The ID of the user to retrieve",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the user to retrieve"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

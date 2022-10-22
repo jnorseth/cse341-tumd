@@ -1,50 +1,59 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/', async (request, response, next) => {
+       
         // #swagger.path = '/reviews'
         // #swagger.tags = ['Review']
         // #swagger.description = 'Get list of all reviews'
 
-        response.status(200).send('You are at /reviews');
+        const reviews = await dependencies.models.review.find();
+
+        for(const review of reviews) {
+            // transforms the user ID to nickname
+            const user_id = review.user;
+            review.user = (await dependencies.models.user.findOne({_id: user_id})).nickname;
+
+            // transforms the numeric song ID to title
+            const song_id = review.song;
+            review.song = (await dependencies.models.song.findOne({_id: song_id})).title;
+        }
+
+        response.status(200).send(reviews);
     });
 
-    router.get('/:review_id', (request, response, next) => {
+    router.get('/:review_id', async (request, response, next) => {
         /*
             #swagger.parameters['review_id'] = {
-                in: 'query',
+                in: 'path',
                 description: 'The ID of the review to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/reviews/:review_id'
+            #swagger.path = '/reviews/{review_id}'
             #swagger.tags = ['Review']
             #swagger.description = 'Get a specific review by review_id'
         */
 
-        response.status(200).send('You are at /reviews/:review_id (GET)');
-    });
+        const review = await dependencies.models.review.findOne({_id: request.params.review_id});
 
-    // the complete path will be
-    // /reviews/song/:song_id
-    router.get('/song/:song_id', (request, response, next) => {
-        /*
-            #swagger.parameters['song_id'] = {
-                in: 'query',
-                description: 'The ID of the song to retrieve reviews of',
-                required: true,
-                type: 'number'
-            }
-            #swagger.path = '/reviews/song/:song_id'
-            #swagger.tags = ['Review']
-            #swagger.description = 'Get a list of reviews by song_id'
-        */
+        if(!review) {
+            return response.status(404).send('Review not found');
+        }
 
-        response.status(200).send('You are at /reviews/song/:song_id (GET)');
+        // transforms the user ID to nickname
+        const user_id = review.user;
+        review.user = (await dependencies.models.user.findOne({_id: user_id})).nickname;
+
+        // transforms the numeric song ID to title
+        const song_id = review.song;
+        review.song = (await dependencies.models.song.findOne({_id: song_id})).title;
+
+        response.status(200).send(review);
     });
 
     // The second callback over here makes authentication required for this endpoint
-    router.post('/', dependencies.requires_authentication(), (request, response, next) => {
+    router.post('/', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.path = '/reviews'
             #swagger.tags = ['Review']
@@ -60,9 +69,12 @@ module.exports = (dependencies) => {
                         },
                         "rating": {
                             "type": "number",
-                            "example": "Some release year..."
+                            "example": 4.5
                         },
                         "user": {
+                            "type": "string"
+                        },
+                        "song": {
                             "type": "string"
                         }
                     }
@@ -70,18 +82,32 @@ module.exports = (dependencies) => {
             }
         */
 
-        response.status(200).send('You are at /reviews (POST)');
+        if(
+            !request.body.body
+            ||
+            !request.body.rating
+            ||
+            !request.body.user
+            ||
+            !request.body.type
+        ) {
+            return response.status(400).send('One of the required fields is missing! Aborting.');
+        }
+
+        const review = await dependencies.models.review.create(request.body);
+
+        response.status(201).send(review._id);
     });
 
-    router.put('/:review_id', dependencies.requires_authentication(), (request, response, next) => {
+    router.put('/:review_id', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.parameters['review_id'] = {
-                in: 'query',
-                description: 'The ID of the review to update',
+                in: 'path',
+                description: 'The ID of the review to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/reviews'
+            #swagger.path = '/reviews/{review_id}'
             #swagger.tags = ['Review']
             #swagger.description = 'Updates a review specified by review_id'
             #swagger.parameters['obj'] = {
@@ -95,9 +121,12 @@ module.exports = (dependencies) => {
                         },
                         "rating": {
                             "type": "number",
-                            "example": "Some release year..."
+                            "example": 4.5
                         },
                         "user": {
+                            "type": "string"
+                        },
+                        "song": {
                             "type": "string"
                         }
                     }
@@ -105,23 +134,39 @@ module.exports = (dependencies) => {
             }
         */
 
-        response.status(200).send('You are at /:review_id (PUT)');
+        if(
+            !request.params.review_id
+        ) {
+            return response.status(400).send('Required parameter "review_id" is missing! Aborting.');
+        }
+
+        const result = await dependencies.models.review.updateOne({_id: request.params.review_id}, request.body);
+
+        response.status(204).send('Updated review with ID: ' + request.params.review_id);
     });
 
-    router.delete('/:review_id', dependencies.requires_authentication(), (request, response, next) => {
+    router.delete('/:review_id', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.parameters['review_id'] = {
-                in: 'query',
-                description: 'The ID of the review to delete',
+                in: 'path',
+                description: 'The ID of the review to retrieve',
                 required: true,
-                type: 'number'
+                type: 'string'
             }
-            #swagger.path = '/reviews/:review_id'
+            #swagger.path = '/reviews/{review_id}'
             #swagger.tags = ['Review']
             #swagger.description = 'Deletes a review specified by review_id'
         */
 
-        response.status(200).send('You are at /reviews/:review_id (DELETE)');
+        if(
+            !request.params.review_id
+        ) {
+            return response.status(400).send('Required parameter "review_id" is missing! Aborting.');
+        }
+
+        const result = await dependencies.models.review.deleteOne({_id: request.params.review_id});
+
+        response.status(200).send('Deleted listing with ID: ' + request.params.review_id);
     });
 
     return router;
