@@ -47,6 +47,8 @@ if(process.env.ENVIRONMENT == 'local') {
 
 const axios = require('axios');
 
+const validate = require('./middlewares/validation');
+
 // Storing all dependencies inside a single object so that this object can be passed around throughout the application
 // Otherwise, required modules would need to be imported inside services, controllers, and models
 const dependencies = {
@@ -57,7 +59,8 @@ const dependencies = {
     base_url: process.env.BASE_URL,
     swagger_ui: swagger_ui,
     swagger_document: swagger_document,
-    axios: axios
+    axios: axios,
+    validate: validate
 };
 
 // Loading all Mongoose models
