@@ -5,10 +5,10 @@
     "description": "The final project for CSE341",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-tumd.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/profile": {
@@ -71,7 +71,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -90,22 +92,19 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artists": {
-                  "type": []
-                },
-                "genres": {
-                  "type": []
-                },
-                "reviews": {
-                  "type": []
+                "artist": {
+                  "type": "string"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -116,6 +115,9 @@
           "Song"
         ],
         "description": "Get a specific song by song_id",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "song_id",
@@ -139,10 +141,10 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to update",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the song to update"
           },
           {
             "name": "obj",
@@ -151,7 +153,9 @@
               "required": [
                 "title",
                 "release_year",
-                "summary"
+                "rating",
+                "summary",
+                "artist"
               ],
               "properties": {
                 "title": {
@@ -170,44 +174,19 @@
                   "type": "string",
                   "example": "Some summary..."
                 },
-                "artists": {
-                  "type": []
-                },
-                "genres": {
-                  "type": []
-                },
-                "reviews": {
-                  "type": []
+                "artist": {
+                  "type": "string"
                 }
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/songs/:song_id": {
-      "get": {
-        "tags": [
-          "Song"
-        ],
-        "description": "Get a specific song by song_id",
-        "parameters": [
-          {
-            "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to retrieve",
-            "required": true,
-            "type": "number"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -219,10 +198,10 @@
         "parameters": [
           {
             "name": "song_id",
-            "in": "query",
-            "description": "The ID of the song to delete",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the song to delete"
           }
         ],
         "responses": {
@@ -232,19 +211,19 @@
         }
       }
     },
-    "/songs/genre/:genre_id": {
+    "/songs/genre/{genre_id}\n\n #swagger.tags = [": {
       "get": {
-        "tags": [
-          "Song"
-        ],
         "description": "Get a list of songs by genre_id",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "genre_id",
-            "in": "query",
-            "description": "The ID of the genre to retrieve songs of",
+            "in": "path",
             "required": true,
-            "type": "number"
+            "type": "string",
+            "description": "The ID of the genre to retrieve songs of"
           }
         ],
         "responses": {
@@ -285,7 +264,7 @@
               "properties": {
                 "first_name": {
                   "type": "string",
-                  "example": "Some first name..."
+                  "example": "Some name..."
                 },
                 "last_name": {
                   "type": "string",
@@ -299,14 +278,19 @@
                   "type": "string",
                   "example": "Some gender..."
                 }
-                
               }
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -329,6 +313,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
@@ -346,32 +333,23 @@
             "description": "The ID of the artist to update"
           },
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
-              "required": [
-                "first_name",
-                "last_name",
-                "date_of_birth"
-              ],
+              "type": "object",
               "properties": {
                 "first_name": {
-                  "type": "string",
-                  "example": "Some title..."
+                  "example": "any"
                 },
                 "last_name": {
-                  "type": "string",
-                  "example": "Some release year..."
+                  "example": "any"
                 },
                 "date_of_birth": {
-                  "type": "date",
-                  "example": "Some summary..."
+                  "example": "any"
                 },
                 "gender": {
-                  "type": "string",
-                  "example": "Some rating..."
+                  "example": "any"
                 }
-                
               }
             }
           }
@@ -379,6 +357,12 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -399,6 +383,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -453,6 +440,9 @@
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -525,6 +515,9 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       },
@@ -545,6 +538,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -609,6 +605,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
