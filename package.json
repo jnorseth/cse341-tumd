@@ -7,7 +7,6 @@
     "test": "jest",
     "start": "nodemon index.js"
   },
-  "preset": "@shelf/jest-mongodb",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amo21004/cse341-tumd.git"
