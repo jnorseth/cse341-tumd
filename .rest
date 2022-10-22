@@ -20,7 +20,6 @@ Content-Type: application/json
 GET http://localhost:3000/categories HTTP/1.1
 
 
-
 ### Same requests but on render
 GET https://naifcse341-m18l.onrender.com/listings HTTP/1.1
 

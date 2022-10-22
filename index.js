@@ -7,6 +7,7 @@ const router = express.Router;
 require('dotenv').config();
 
 app.use(require('cors')());
+app.use(bodyParser.json());
 
 const body_parser = require('body-parser');
 
@@ -78,7 +79,7 @@ dependencies.models = {
     user: mongoose.model('User')
 };
 
-const { sep } = require('path');
+const { dirname, sep } = require('path');
 
 const configuration = {
     dir: {
