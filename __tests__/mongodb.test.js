@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 require('dotenv').config();
 
-describe('insert', () => {
+describe('Create/Read/Delete Test', () => {
     let connection, db;
 
     beforeAll(async () => {
@@ -18,20 +18,20 @@ describe('insert', () => {
         await connection.close();
     });
 
-    const mockUser = { _id: 'some-user-id', name: 'John' };
+    const mockUser = { _id: 'jest-test-user-id', name: 'John' };
 
     it('Insert user', async () => {
         const users = db.collection('users');
 
         const result = await users.insertOne(mockUser);
 
-        expect(result.insertedId).toEqual('some-user-id');
+        expect(result.insertedId).toEqual('jest-test-user-id');
     });
 
     it('Find inserted user', async () => {
         const users = db.collection('users');
 
-        const insertedUser = await users.findOne({ _id: 'some-user-id' });
+        const insertedUser = await users.findOne({ _id: 'jest-test-user-id' });
 
         expect(insertedUser).toEqual(mockUser);
     });
@@ -39,7 +39,7 @@ describe('insert', () => {
     it('Delete inserted user', async () => {
         const users = db.collection('users');
 
-        const mockUser = { _id: 'some-user-id', name: 'John' };
+        const mockUser = { _id: 'jest-test-user-id', name: 'John' };
 
         const deletedUser = await users.deleteOne(mockUser);
 

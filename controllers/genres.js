@@ -13,6 +13,7 @@ module.exports = (dependencies) => {
         try {
         for(const genre of genres) {
             genres_getall.push({
+                id: genre.id,
                 name: genre.name
             });
         }
@@ -34,7 +35,8 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Genre']
             #swagger.description = 'Get a specific genre by genre_id'
         */
-            const genre = dependencies.models.genre.findOne({_id: request.params.genre_id});
+            const genre = await dependencies.models.genre.findOne({_id: request.params.genre_id});
+
             if(!genre) {
                 return response.status(404).send('Genre not found');
             }
@@ -72,7 +74,7 @@ module.exports = (dependencies) => {
                 //not sure if this is needed so I am commenting it out
                 //next();
             }
-            const new_genre = await dependencies.models.genres.create(request.body);
+            const new_genre = await dependencies.models.genre.create(request.body);
 
             if (!new_genre) {
                 response.status(500).send('An error occured.');
@@ -105,7 +107,7 @@ module.exports = (dependencies) => {
                 }
             }
         */
-            const result = await dependencies.models.genre.updateOne({_id: request.params.genre_id}, request.body);
+        const result = await dependencies.models.genre.updateOne({_id: request.params.genre_id}, request.body);
         response.status(200).send('Updated genre with ID: ' + request.params.genre_id);
     }); 
 
@@ -121,7 +123,12 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Genre']
             #swagger.description = 'Deletes a genre specified by genre_id'
         */
-       
+
+            const result = await dependencies.models.genre.deleteOne({_id: request.params.genre_id});
+
+            return response.status(200).send('Deleted genre with ID: ' + request.params.genre_id);
+            
+            /*
             const genre = dependencies.models.genre.findOne({_id: request.params.genre_id});
             if(!genre) {
                 return response.status(404).send('Genre not found');
@@ -132,6 +139,7 @@ module.exports = (dependencies) => {
             genres_processed.name = genre.name;
 
             response.status(200).send(genres_processed);
+            */
     });
 
     return router;

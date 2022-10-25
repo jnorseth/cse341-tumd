@@ -2,6 +2,7 @@ module.exports = (dependencies) => {
     const router = dependencies.router();
 
     router.get('/', async (request, response, next) => {
+       
         // #swagger.path = '/reviews'
         // #swagger.tags = ['Review']
         // #swagger.description = 'Get list of all reviews'
@@ -81,6 +82,18 @@ module.exports = (dependencies) => {
             }
         */
 
+        if(
+            !request.body.body
+            ||
+            !request.body.rating
+            ||
+            !request.body.user
+            ||
+            !request.body.type
+        ) {
+            return response.status(400).send('One of the required fields is missing! Aborting.');
+        }
+
         const review = await dependencies.models.review.create(request.body);
 
         response.status(201).send(review._id);
@@ -121,6 +134,12 @@ module.exports = (dependencies) => {
             }
         */
 
+        if(
+            !request.params.review_id
+        ) {
+            return response.status(400).send('Required parameter "review_id" is missing! Aborting.');
+        }
+
         const result = await dependencies.models.review.updateOne({_id: request.params.review_id}, request.body);
 
         response.status(204).send('Updated review with ID: ' + request.params.review_id);
@@ -138,7 +157,13 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Review']
             #swagger.description = 'Deletes a review specified by review_id'
         */
-       
+
+        if(
+            !request.params.review_id
+        ) {
+            return response.status(400).send('Required parameter "review_id" is missing! Aborting.');
+        }
+
         const result = await dependencies.models.review.deleteOne({_id: request.params.review_id});
 
         response.status(200).send('Deleted listing with ID: ' + request.params.review_id);
