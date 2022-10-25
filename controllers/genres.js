@@ -1,15 +1,28 @@
 module.exports = (dependencies) => {
     const router = dependencies.router();
 
-    router.get('/', (request, response, next) => {
+    router.get('/', async (request, response, next) => {
         // #swagger.path = '/genres'
         // #swagger.tags = ['Genre']
         // #swagger.description = 'Get list of all genres'
 
-        response.status(200).send('You are at /genres');
+        const genres = await dependencies.models.genre.find();
+
+        const genres_getall= [];
+        
+        try {
+        for(const genre of genres) {
+            genres_getall.push({
+                name: genre.name
+            });
+        }
+        response.status(200).send(genres_getall);
+    }catch(err) {
+        console.error(err);
+    }
     });
 
-    router.get('/:genre_id', (request, response, next) => {
+    router.get('/:genre_id', async (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
                 in: 'path',
@@ -21,8 +34,16 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Genre']
             #swagger.description = 'Get a specific genre by genre_id'
         */
+            const genre = dependencies.models.genre.findOne({_id: request.params.genre_id});
+            if(!genre) {
+                return response.status(404).send('Genre not found');
+            }
+            const genres_processed = {};
 
-        response.status(200).send('You are at /genres/:genre_id (GET)');
+            genres_processed.id = genre._id;
+            genres_processed.name = genre.name;
+
+            response.status(200).send(genres_processed);
     });
 
     // The second callback over here makes authentication required for this endpoint
@@ -44,11 +65,23 @@ module.exports = (dependencies) => {
                 }
             }
         */
+        
+            if (!request.body.name) {
+                return response.status(400).send('One or more of the required fields are missing.');
+            } else {
+                //not sure if this is needed so I am commenting it out
+                //next();
+            }
+            const new_genre = await dependencies.models.genres.create(request.body);
 
-        response.status(200).send('You are at /genres (POST)');
-    });
+            if (!new_genre) {
+                response.status(500).send('An error occured.');
+            } else {
+                response.status(201).send('Successfully added genre. ID: ' + new_genre._id);
+            }
+        });
 
-    router.put('/:genre_id', dependencies.requires_authentication(), (request, response, next) => {
+    router.put('/:genre_id', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
                 in: 'path',
@@ -72,11 +105,11 @@ module.exports = (dependencies) => {
                 }
             }
         */
+            const result = await dependencies.models.genre.updateOne({_id: request.params.genre_id}, request.body);
+        response.status(200).send('Updated genre with ID: ' + request.params.genre_id);
+    }); 
 
-        response.status(200).send('You are at /:genre_id (PUT)');
-    });
-
-    router.delete('/:genre_id', dependencies.requires_authentication(), (request, response, next) => {
+    router.delete('/:genre_id', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.parameters['genre_id'] = {
                 in: 'path',
@@ -88,8 +121,17 @@ module.exports = (dependencies) => {
             #swagger.tags = ['Genre']
             #swagger.description = 'Deletes a genre specified by genre_id'
         */
+       
+            const genre = dependencies.models.genre.findOne({_id: request.params.genre_id});
+            if(!genre) {
+                return response.status(404).send('Genre not found');
+            }
+            const genres_processed = {};
 
-        response.status(200).send('You are at /genres/:genre_id (DELETE)');
+            genres_processed.id = genre._id;
+            genres_processed.name = genre.name;
+
+            response.status(200).send(genres_processed);
     });
 
     return router;
