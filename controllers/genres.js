@@ -5,7 +5,6 @@ module.exports = (dependencies) => {
         // #swagger.path = '/genres'
         // #swagger.tags = ['Genre']
         // #swagger.description = 'Get list of all genres'
-        const genres = await dependencies.models.genre.find();
 
         const genres = await dependencies.models.genre.find();
 
@@ -47,7 +46,6 @@ module.exports = (dependencies) => {
             response.status(200).send(genres_processed);
     });
 
-
     // The second callback over here makes authentication required for this endpoint
     router.post('/', dependencies.requires_authentication(), async (request, response, next) => {
         /*
@@ -67,6 +65,14 @@ module.exports = (dependencies) => {
                 }
             }
         */
+        
+            if (!request.body.name) {
+                return response.status(400).send('One or more of the required fields are missing.');
+            } else {
+                //not sure if this is needed so I am commenting it out
+                //next();
+            }
+            const new_genre = await dependencies.models.genres.create(request.body);
 
             if (!new_genre) {
                 response.status(500).send('An error occured.');

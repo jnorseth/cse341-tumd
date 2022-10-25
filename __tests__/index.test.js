@@ -24,7 +24,7 @@ test('check single review api endpoint (/reviews/63486dab644380993a785107)', asy
     );
 });
 
-test('check single review api endpoint (/artists/63486c9b644380993a785104)', async () => {
+test('check single artist api endpoint (/artists/63486c9b644380993a785104)', async () => {
     expect(JSON.stringify
         ((await axios('http://localhost:3000/artists/63486c9b644380993a785104')).data)
     ).toBe(
