@@ -47,7 +47,7 @@ module.exports = (dependencies) => {
     });
 
     // The second callback over here makes authentication required for this endpoint
-    router.post('/', dependencies.requires_authentication(), (request, response, next) => {
+    router.post('/', dependencies.requires_authentication(), async (request, response, next) => {
         /*
             #swagger.path = '/genres'
             #swagger.tags = ['Genre']
